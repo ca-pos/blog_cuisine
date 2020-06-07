@@ -1,0 +1,33 @@
+<div class="container-fluid my-3">
+    <div class="row">
+        <div class="col-sm-2 d-none d-sm-block">
+            <a href="{{ path('homepage')}}">
+                <img src="/images/logo120.png" alt="Plat à tajine" class="imge-fluid"/>
+            </a>
+        </div>
+        <div class="col-12 col-sm-9 ml-4 nom-site">
+            <h1>La cuisine de Marguerite et Aurélien</h1>
+            <h2>Yet another blog about cooking</h2>
+        </div>
+    </div>
+</div>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav mr-auto ml-1">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('homepage')}}">Accueil<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a href="#" class="nav-link">Mon Compte</a>
+            </li>
+        </ul>
+    </div>
+</nav>
