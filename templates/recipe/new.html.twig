@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Enregistrer une recette
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Proposez une nouvelle recette</h1>
+
+        {{ form_start(form) }}
+
+        {{form_widget(form)}}
+
+        <button type="submit" class="btn btn-primary">
+            Proposez la recette
+        </button>
+
+        {{ form_end(form) }}
+
+    </div>
+{% endblock %}
