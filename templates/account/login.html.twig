@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion au site{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">&nbsp;</div>
+            <div class="col-md-6">
+                <div class="bg-light rounded p-3 my-4">
+                    <h1>Connexion</h1>
+
+                    <!-- Ajout du if hasError ici -->
+                    {% if hasError %}
+                        <div class="alert alert-danger">
+                            Erreur d'identifiant ou de mot de passe
+                        </div>
+                    {% endif %}        
+
+                    <form action="{{path('account_login')}}" method="post">
+                        <div class="form-group">
+                            <label for="pseudo">Identifiant</label>
+                            <input type="text" name="_username" id="pseudo" class="form-control" placeholder="Entrez votre pseudo" value="{{username}}" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Mot de passe</label>
+                            <input type="password" name="_password" id="password" class="form-control" placeholder="Entrez votre mot de passe" required />
+                        </div>
+                        <!-- <div class="form-group"> -->
+                            <button type="submit" class="btn btn-primary">
+                                Se connecter
+                            </button>
+                        <!-- </div> -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
