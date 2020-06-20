@@ -14,18 +14,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class RecipeController extends AbstractController
 {
     /**
+     * ====== AFFICHE LA LISTE DES RECETTES ======
+     * 
      * @Route("/recipes", name="recipes_index")
      */
-    public function index(RecipeRepository $repo)
+    public function index(RecipeRepository $repo) 
     {
-         $recipes = $repo->findAll();
+        $recipes = $repo->findAll();
 
         return $this->render('recipe/index.html.twig', [
             'recipes' => $recipes
         ]);
     }
     /**
-     * permet la création d'une recette
+     * ====== CRÉATION D'UNE RECETTE ======
      * 
      * @Route("/recipes/new", name="recipes_create")
      *
@@ -41,7 +43,7 @@ class RecipeController extends AbstractController
 
         // le if ci-dessous devrait être repris pour mettre la nouvelle recette en attente de validation.
         // suggestion : sauvegarder à part (dans une autre table ? dans la table principale en ajoutant un champ statut ?)
-        // il faudrat ensuite créer dans administration un outil de validation manuelle de la recette avant insertion dans la liste
+        // il faudra ensuite créer dans administration un outil de validation manuelle de la recette avant insertion dans la liste
         if( $form->isSubmitted() && $form->isValid()) {
             $manager->persist($recipe);
             $manager->flush();
@@ -63,7 +65,7 @@ class RecipeController extends AbstractController
         ]);
     }
     /**
-     * affichage d'une seule annonce
+     * ====== AFFICHE UNE RECETTE ======
      * 
      * @Route("/recipes/{slug}", name="recipes_show")
      *

@@ -8,9 +8,16 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- */
+ * @UniqueEntity(
+ *   fields={"pseudo"},
+ *   message = "Ce pseudo est déjà utilisé, veuillez en choisir un autre"
+ * )
+*/
 class User implements UserInterface
 {
     /**
@@ -22,26 +29,37 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Ce champ ne doit pas être vide")
      */
     private $pseudo;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Ce champ ne doit pas être vide")
+     * @Assert\Email(message = "'{{ value }}' n'est pas une adresse valide")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url( message = "'{{ value }}' n'est pas une url valide", normalizer = "trim")
      */
     private $avatar;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=8, minMessage="Le mot de passe doit comporter au moins 8 caractères")
      */
     private $hash;
 
     /**
+	* @Assert\EqualTo(propertyPath="hash", message="Les mots de passe ne sont pas identiques")
+	*/
+    public $passwordConfirm;
+        
+    /**
      * @ORM\Column(type="text")
+     * @Assert\Length(min=8, minMessage="Ce champ doit comporter au moins 50 caractères")
      */
     private $introduction;
 
