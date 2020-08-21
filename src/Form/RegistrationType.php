@@ -21,8 +21,18 @@ class RegistrationType extends ApplicationType
             ->add(
                 'pseudo',
                 TextType::class,
-                $this->getConfiguration("Identifiant", "Entrez votre pseudo")
+                $this->getConfiguration("Identifiant", "Choisissez un pseudo")
                 )
+            ->add(
+                'firstName',
+                TextType::class,
+                $this->getConfiguration("Prénom", "Entrez votre prénom usuel")
+            )
+            ->add(
+                'lastName',
+                TextType::class,
+                $this->getConfiguration("Nom", "Entrez votre nom de famille")
+            )
             ->add(
                 'email',
                 EmailType::class,

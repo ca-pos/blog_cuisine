@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title%}Liste des membres{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mb-4">Liste des membres</h1>
+            {% for user in users|sort((a, b) => a.lastName <=> b.lastName) %}
+        <div class="row align-items-center">
+                <div class="col-md-3 d-none d-md-block text-center">
+                    <img src="{{user.avatar}}" class="avatar" alt="Avatar de {{user.fullName}}">
+                </div>
+                <div class="col-md-9">
+                    <h3>
+                        {{user.fullName}} (alias
+                        <a href="{{ path('user_show', {'slug': user.slug}) }}">
+                            {{user.pseudo}}
+                        </a>
+                        )
+                    </h3>
+                    <p>{{user.introduction|raw}}</p>
+                    <span class="badge badge-primary">{{user.recipes|length}} recette(s)</span>
+                </div>
+        </div>
+        <div class='bg-success my-3' style="height:2px;content:''"></div>
+            {% endfor %}
+    </div>
+{% endblock %}

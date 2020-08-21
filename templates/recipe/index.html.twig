@@ -7,32 +7,7 @@
     <h1 class="my-3">Liste de nos recettes</h1>
     <div class="row">
         {% for recipe in recipes %}
-            {% set url = path('recipes_show', {'slug': recipe.slug}) %}
-            <div class="col-12 col-lg-6">
-                <div class="card my-3 p-3">
-                    <div class="card-header">
-                        <a href="{{url}}">
-                            <h3>{{recipe.name}}</h3>
-                        </a>
-                        <h5 class="font-italic">
-                            proposé par {{recipe.author.pseudo}}
-                        </h5>
-                    </div>
-                    <div class="row no-gutters">
-                        <div class="col-12 col-md-6">
-                            <a href="{{url}}">
-                                <img src=" {{ recipe.image }} " class="d-block mx-auto my-3 img-fluid" alt=" {{recipe.name}} ">
-                            </a>
-                        </div>
-                        <div class="col-12 col-md-6 p-3">
-                            {{recipe.summary|raw}}
-                        </div>
-                    </div>
-                    <div class="card-footer text-right">
-                        <a href="{{url}}">Voir la recette</a>
-                    </div>
-                </div>
-            </div>
+            {% include 'recipe/_recipe.html.twig' %}
         {% endfor %}
     </div>
 </div>

@@ -1,0 +1,54 @@
+@font-face {
+    font-family: 'gala_scriptitalic';
+    src: url('/fonts/galascript-webfont.eot');
+    src: url('/fonts/galascript-webfont.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/galascript-webfont.woff') format('woff'),
+    url('/fonts/galascript-webfont.ttf') format('truetype'),
+    url('/fonts/galascript-webfont.svg#gala_scriptitalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+div.nom-site h1 {
+    font-family: 'gala_scriptitalic', cursive;
+    color: burlywood;
+    font-size: 40px;
+}
+div.nom-site h2 {
+    color: burlywood;
+    font-size: 22px;;
+}
+.homepage-cards {
+    height: 24rem;
+}
+.dayrecipe {
+    height: 12rem;
+}
+.custom-scrollbar {
+    overflow-y: auto;
+}
+
+.avatar {
+    max-width: 128px;
+    max-height: 128px;
+    border-radius: 50%;
+    &-medium {
+        max-width: 64px;
+        max-height: 64px;
+    }
+    &-mini {
+        max-width: 48px;
+        max-height: 48px;
+    }
+}
+span.badge {
+    font-size: 110%;
+}
+
+.red-divider {
+    width: 100%;
+    height: 2px;
+    color: red;
+    margin: 0 auto;
+
+}

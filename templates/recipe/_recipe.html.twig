@@ -1,0 +1,32 @@
+{% set url = path('recipes_show', {'slug': recipe.slug}) %}
+
+<div class="col-12 col-lg-6">
+    <div class="card my-3 p-3">
+        <div class="card-header">
+            <a href="{{url}}">
+                <h3>{{recipe.name}}</h3>
+            </a>
+            {% if user is not defined %}
+                <h5 class="font-italic">
+                    proposé par 
+                    <a href="{{ path('user_show', {'slug': recipe.author.slug}) }}">
+                        {{recipe.author.pseudo}}
+                    </a>
+                </h5>
+            {% endif %}
+        </div>
+        <div class="row no-gutters">
+            <div class="col-12 col-md-6">
+                <a href="{{url}}">
+                    <img src=" {{ recipe.image }} " class="d-block mx-auto my-3 img-fluid" alt=" {{recipe.name}} ">
+                </a>
+            </div>
+            <div class="col-12 col-md-6 p-3">
+                {{recipe.summary|raw}}
+            </div>
+        </div>
+        <div class="card-footer text-right">
+            <a href="{{url}}">Voir la recette</a>
+        </div>
+    </div>
+</div>

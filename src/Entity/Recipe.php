@@ -57,7 +57,7 @@ class Recipe
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="recipes")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $author;
 
@@ -75,6 +75,7 @@ class Recipe
             $this->slug = $slugify->slugify($this->name);
         }
     }
+
     public function getId(): ?int
     {
         return $this->id;

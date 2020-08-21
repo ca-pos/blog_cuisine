@@ -30,7 +30,6 @@ class RecipeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('author', TextType::class, $this->getConfiguration('Auteur de la recette', 'Votre pseudo'))
             ->add('name', TextType::class, $this->getConfiguration("Nom de la recette", "Entrez le nom de votre recette"))
             ->add('summary', TextType::class, $this->getConfiguration("Présentation", "Courte description votre recette (250 car. max) qui sera affiché dans la liste des recettes"))
             ->add('image', UrlType::class, $this->getConfiguration("Photo", "Entrez l'url d'une photo de votre plat"))

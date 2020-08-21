@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use Faker\Factory;
+use App\Entity\Role;
 use App\Entity\User;
 use App\Entity\Recipe;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -18,7 +19,23 @@ class AppFixtures extends Fixture
     }
     public function load(ObjectManager $manager)
     {
-        $faker = Factory::create('fr-FR');
+        $faker = Factory::create('fr_FR');
+
+        // création d'un utilisateur ADMIN
+        $adminRole = new Role();
+        $adminRole->setTitle('ROLE_ADMIN');
+        $manager->persist($adminRole);
+
+        $adminUser = new User();
+        $adminUser->setPseudo('admin')
+                  ->setFirstName('Jean')
+                  ->setLastName('Poss')
+                  ->setEmail('admin@blog-cuisine.net')
+                  ->setHash($this->encoder->encodePassword($adminUser, 'aaaaaaaa'))
+                  ->setIntroduction('C\'est moi l\'administrateur de ce site')
+                  ->setAvatar('https://randomuser.me/api/portraits/men/18.jpg')
+                  ->addUserRole($adminRole);
+        $manager->persist($adminUser);
 
         // gestion des utilisateurs
         $users = [];
@@ -29,10 +46,13 @@ class AppFixtures extends Fixture
             $genre = $faker->randomElement(['men/','women/']);
             $picId = $faker->numberBetween(1, 99) . '.jpg';
             $pic = $url . $genre . $picId;
+            $prenom = ($genre === 'men/')?$faker->firstNameMale:$faker->firstNameFemale;
 
             $hash = $this->encoder->encodePassword($user, 'password');
 
-            $user->setPseudo($faker->lastname)
+            $user->setPseudo($faker->unique()->word)
+                 ->setfirstName($prenom)
+                 ->setlastName($faker->lastName)
                  ->setEmail($faker->email)
                  ->setHash($hash)
                  ->setIntroduction('<p>' . $faker->sentences($nb = 2, $asText = true) . '</p>')

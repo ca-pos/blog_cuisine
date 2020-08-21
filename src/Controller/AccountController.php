@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -81,6 +82,7 @@ class AccountController extends AbstractController
 
     /**
      * modification du profil utilisateur
+     * @IsGranted("ROLE_USER")
      * 
      * @Route("/account/profile", name="account_profile")
      *
@@ -111,6 +113,7 @@ class AccountController extends AbstractController
 
     /**
      * modifier le mdp
+     * @IsGranted("ROLE_USER")
      * 
      * @Route("/account/password", name="account_password")
      *
@@ -150,4 +153,19 @@ class AccountController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * affiche la page de l'utilisateur connecté
+     *
+     * @Route("/account", name="account_index")
+     * @IsGranted("ROLE_USER")
+     * 
+     * @return Response
+     */
+    public function myAccount() {
+        return $this->render('user/index.html.twig', [
+            'user' => $this->getUser()
+        ]);
+    }
+
 }

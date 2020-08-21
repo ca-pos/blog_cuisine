@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RecipeController extends AbstractController
@@ -45,6 +46,9 @@ class RecipeController extends AbstractController
         // suggestion : sauvegarder à part (dans une autre table ? dans la table principale en ajoutant un champ statut ?)
         // il faudra ensuite créer dans administration un outil de validation manuelle de la recette avant insertion dans la liste
         if( $form->isSubmitted() && $form->isValid()) {
+
+            $recipe->setAuthor($this->getUser());
+
             $manager->persist($recipe);
             $manager->flush();
 
@@ -64,6 +68,46 @@ class RecipeController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * ====== MODIFICATION D'UNE RECETTE =====
+     * 
+     * @Route("recipes/{slug}/edit", name="recipes_edit")
+     * @Security("is_granted('ROLE_USER') and user === recipe.getAuthor()", message = "Vous n'êtes pas l'auteur de cette recette, vous ne pouvez pas la modifier")
+     * 
+     * @param Recipe $recipe
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * 
+     * @return Response
+     */
+
+    public function edit( Recipe $recipe, Request $request, EntityManagerInterface $manager) {
+
+        $form = $this->createForm(RecipeTYpe::class, $recipe);
+
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) { 
+            $recipe->setAuthor($this->getUser());
+            $manager->persist($recipe);
+            $manager->flush();
+
+            $this->addFlash(
+            'success',
+            'La modification de la recette a bien été soumise'
+            );
+
+            return $this->redirectToRoute('recipes_show', [
+                'slug' => $recipe->getSlug()
+                ]);
+        }
+
+        return $this->render('recipe/edit.html.twig', [
+                'form' => $form->createView(),
+                'recipe' => $recipe,
+            ]);
+    }
     /**
      * ====== AFFICHE UNE RECETTE ======
      * 
@@ -78,4 +122,28 @@ class RecipeController extends AbstractController
             'recipe' => $recipe
         ]);
     }
+
+    /**
+     * ====== SUPPRIME UNE RECETTE ======
+     * 
+     *  @Route("recipes/{slug}/delete", name="recipes_delete")
+     * @Security("is_granted('ROLE_USER') and user === recipe.getAuthor()", message = "Vous n'êtes pas l'auteur de cette recette, vous ne pouvez pas la supprimer")
+     * 
+     * @param EntityManagerInterface $manager
+     * 
+     * @return Response
+     * 
+     */
+
+     public function delete( Recipe $recipe, EntityManagerInterface $manager ) {
+        $manager->remove( $recipe );
+        $manager->flush();
+
+        $this->addFlash(
+        '	success',
+        '	La recette {recipe.name} a bien été supprimée'
+        );
+
+        return $this->redirectToRoute('homepage');
+     }
 }
